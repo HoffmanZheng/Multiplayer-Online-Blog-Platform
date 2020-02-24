@@ -1,7 +1,10 @@
 package com.github.NervousOrange.springboot.entity;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.time.Instant;
 
+@SuppressFBWarnings("UWF_NULL_FIELD")
 public class User {
     Integer id;
     String username;
