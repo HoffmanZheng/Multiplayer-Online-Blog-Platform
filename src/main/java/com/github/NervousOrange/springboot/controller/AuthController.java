@@ -27,15 +27,13 @@ public class AuthController {
     @GetMapping("/auth")
     @ResponseBody
     public Object auth() {
-        if (alreadyLogin()) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user =  userService.getUserByUsername(username);
+        if (user == null) {
             return new LoginResult("ok", "false", null, "false");
         } else {
-            return new LoginResult("ok", "true", null, "true");
+            return new LoginResult("ok", "true", user, "true");
         }
-    }
-
-    private boolean alreadyLogin() {
-        return false;
     }
 
     @PostMapping("/auth/login")
@@ -53,7 +51,7 @@ public class AuthController {
         try {
             authenticationManager.authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(token);
-            return new LoginResult("ok", "登录成功", new User(1, username), "true");
+            return new LoginResult("ok", "登录成功", userService.getUserByUsername(username), "true");
         } catch (BadCredentialsException e) {
             return new LoginResult("fail", "密码不正确", null, "false");
         }

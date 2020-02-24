@@ -15,7 +15,11 @@ public class MysqlDao {
         this.sqlSession = sqlSession;
     }
 
-    public User selectUserById(int id) {
-        return this.sqlSession.selectOne("myMapper.selectUserByID", id);
+    public User getUserByUsername(String username) {
+        return this.sqlSession.selectOne("myMapper.getUserByUsername", username);
+    }
+
+    public void insertNewUser(User user) {
+        this.sqlSession.insert("myMapper.insertNewUser", user);
     }
 }

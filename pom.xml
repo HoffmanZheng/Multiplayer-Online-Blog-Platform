@@ -68,6 +68,11 @@
 			<artifactId>annotations</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>6.2.4</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
