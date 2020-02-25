@@ -2,12 +2,34 @@ package com.github.NervousOrange.springboot.service;
 
 import com.github.NervousOrange.springboot.dao.MysqlDao;
 import com.github.NervousOrange.springboot.entity.User;
+<<<<<<< HEAD
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+=======
 import org.springframework.security.authentication.AuthenticationManager;
+>>>>>>> solveConflict1
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Collections;
 
 @Service
+<<<<<<< HEAD
+public class UserService implements UserDetailsService {
+    private MysqlDao mysqlDao;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Inject
+    @SuppressFBWarnings("URF_UNREAD_FIELD")
+    public UserService(MysqlDao mysqlDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.mysqlDao = mysqlDao;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        // this.mysqlDao.insertNewUser(new User("laowang", bCryptPasswordEncoder.encode("693922")));
+        // this.mysqlDao.insertNewUser(new User("lili", bCryptPasswordEncoder.encode("930615")));
+=======
 public class UserService {
     private MysqlDao mysqlDao;
     private AuthenticationManager authenticationManager;
@@ -16,10 +38,28 @@ public class UserService {
     public UserService(MysqlDao mysqlDao, AuthenticationManager authenticationManager) {
         this.mysqlDao = mysqlDao;
         this.authenticationManager = authenticationManager;
+>>>>>>> solveConflict1
     }
 
-    public User getUserById(int id) {
-        return this.mysqlDao.selectUserById(id);
+    public User insertNewUser(String username, String password) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+        User user = new User(username, encryptedPassword);
+        this.mysqlDao.insertNewUser(user);
+        return user;
+    }
+
+    public User getUserByUsername(String username) {
+        return this.mysqlDao.getUserByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user;
+        if ((user = getUserByUsername(username)) == null) {
+            throw new UsernameNotFoundException("用户不存在");
+        }
+        String encodedPassword = user.getEncryptedPassword();
+        return new org.springframework.security.core.userdetails.User(username, encodedPassword, Collections.emptyList());
     }
 
 }
