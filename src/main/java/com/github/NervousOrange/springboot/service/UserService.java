@@ -2,22 +2,16 @@ package com.github.NervousOrange.springboot.service;
 
 import com.github.NervousOrange.springboot.dao.MysqlDao;
 import com.github.NervousOrange.springboot.entity.User;
-<<<<<<< HEAD
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-=======
-import org.springframework.security.authentication.AuthenticationManager;
->>>>>>> solveConflict1
 import org.springframework.stereotype.Service;
-
 import javax.inject.Inject;
 import java.util.Collections;
 
 @Service
-<<<<<<< HEAD
 public class UserService implements UserDetailsService {
     private MysqlDao mysqlDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -27,18 +21,6 @@ public class UserService implements UserDetailsService {
     public UserService(MysqlDao mysqlDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.mysqlDao = mysqlDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        // this.mysqlDao.insertNewUser(new User("laowang", bCryptPasswordEncoder.encode("693922")));
-        // this.mysqlDao.insertNewUser(new User("lili", bCryptPasswordEncoder.encode("930615")));
-=======
-public class UserService {
-    private MysqlDao mysqlDao;
-    private AuthenticationManager authenticationManager;
-
-    @Inject
-    public UserService(MysqlDao mysqlDao, AuthenticationManager authenticationManager) {
-        this.mysqlDao = mysqlDao;
-        this.authenticationManager = authenticationManager;
->>>>>>> solveConflict1
     }
 
     public User insertNewUser(String username, String password) {
