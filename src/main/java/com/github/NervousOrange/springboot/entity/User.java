@@ -1,5 +1,6 @@
 package com.github.NervousOrange.springboot.entity;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -18,10 +19,25 @@ public class User {
     public User (String username, String encryptedPassword) {
         this.username = username;
         this.encryptedPassword = encryptedPassword;
+=======
+import java.time.Instant;
+
+public class User {
+    Integer id;
+    String username;
+    String avatar;
+    Instant createdAt;
+    Instant updatedAt;
+
+    public User(Integer id, String username) {
+        this.id = id;
+        this.username = username;
+>>>>>>> solveConflict1
         this.avatar = null;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
+
 
     public Integer getId() {
         return id;
@@ -31,10 +47,13 @@ public class User {
         return username;
     }
 
+<<<<<<< HEAD
     public String getEncryptedPassword() {
         return encryptedPassword;
     }
 
+=======
+>>>>>>> solveConflict1
     public String getAvatar() {
         return avatar;
     }
