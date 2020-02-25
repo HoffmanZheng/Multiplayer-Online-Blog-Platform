@@ -22,8 +22,15 @@ public class UserService implements UserDetailsService {
     public UserService(MysqlDao mysqlDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.mysqlDao = mysqlDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        // this.mysqlDao.insertNewUser(new User(1, "laowang", bCryptPasswordEncoder.encode("693922")));
-        // this.mysqlDao.insertNewUser(new User(1, "lili", bCryptPasswordEncoder.encode("930615")));
+        // this.mysqlDao.insertNewUser(new User("laowang", bCryptPasswordEncoder.encode("693922")));
+        // this.mysqlDao.insertNewUser(new User("lili", bCryptPasswordEncoder.encode("930615")));
+    }
+
+    public User insertNewUser(String username, String password) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+        User user = new User(username, encryptedPassword);
+        this.mysqlDao.insertNewUser(user);
+        return user;
     }
 
     public User getUserByUsername(String username) {
