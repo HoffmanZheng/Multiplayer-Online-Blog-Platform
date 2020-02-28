@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,8 +30,8 @@ public class AuthController {
     @GetMapping("/auth")
     @ResponseBody
     public Object auth() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user =  userService.getUserByUsername(username);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user =  userService.getUserByUsername(authentication == null ? null : authentication.getName());
         if (user == null) {
             return AuthResult.notLoggedAuthResult();
         } else {
@@ -74,15 +75,15 @@ public class AuthController {
             userService.insertNewUser(username, password);
             return AuthResult.successfulResult("注册成功", userService.getUserByUsername(username));
         } catch (DuplicateKeyException e) {
-            return AuthResult.failedResult("username already exits");
+            return AuthResult.failedResult("username already exist");
         }
     }
 
     @GetMapping("/auth/logout")
     @ResponseBody
     public Object logout() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = this.userService.getUserByUsername(username);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = this.userService.getUserByUsername(authentication == null ? null : authentication.getName());
         if (user == null) {
             return AuthResult.failedResult("用户尚未登录");
         } else {
