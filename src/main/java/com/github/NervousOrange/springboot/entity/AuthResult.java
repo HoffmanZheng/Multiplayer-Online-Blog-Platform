@@ -41,7 +41,7 @@ public class AuthResult {
         return data;
     }
 
-    public boolean isLogin() {
+    public boolean isIsLogin() {
         return isLogin;
     }
 }

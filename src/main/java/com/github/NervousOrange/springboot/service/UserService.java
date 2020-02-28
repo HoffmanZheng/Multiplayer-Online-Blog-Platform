@@ -25,12 +25,13 @@ public class UserService implements UserDetailsService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void insertNewUser(String username, String password) {
+    public String insertNewUser(String username, String password) {
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         Map<String, String> param = new HashMap<>();
         param.put("username", username);
         param.put("encryptedPassword", encryptedPassword);
         this.mysqlDao.insertNewUser(param);
+        return username;
     }
 
     public User getUserByUsername(String username) {
