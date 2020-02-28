@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Map;
 
 @Component
 public class MysqlDao {
@@ -19,7 +20,7 @@ public class MysqlDao {
         return this.sqlSession.selectOne("myMapper.getUserByUsername", username);
     }
 
-    public void insertNewUser(User user) {
-        this.sqlSession.insert("myMapper.insertNewUser", user);
+    public void insertNewUser(Map param) {
+        this.sqlSession.insert("myMapper.insertNewUser", param);
     }
 }

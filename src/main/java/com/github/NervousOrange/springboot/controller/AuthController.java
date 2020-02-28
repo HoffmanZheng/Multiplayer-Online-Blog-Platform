@@ -71,8 +71,8 @@ public class AuthController {
             return AuthResult.failedResult("invalid password");
         }
         try {
-            User user = userService.insertNewUser(username, password);
-            return AuthResult.successfulResult("注册成功", user);
+            userService.insertNewUser(username, password);
+            return AuthResult.successfulResult("注册成功", userService.getUserByUsername(username));
         } catch (DuplicateKeyException e) {
             return AuthResult.failedResult("username already exits");
         }

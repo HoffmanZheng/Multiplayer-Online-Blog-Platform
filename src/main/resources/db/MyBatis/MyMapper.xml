@@ -6,9 +6,9 @@
   <select id="getUserByUsername" parameterType="String" resultType="com.github.NervousOrange.springboot.entity.User">
         select * from user where username = #{username}
   </select>
-  <insert id="insertNewUser" parameterType="com.github.NervousOrange.springboot.entity.User">
-        insert into user (username,encrypted_password,avatar,created_at,updated_at)
-        values (#{username},#{encryptedPassword},#{avatar},#{createdAt},#{updatedAt})
+  <insert id="insertNewUser" parameterType="HashMap">
+        insert into user (username,encrypted_password,created_at,updated_at)
+        values (#{username},#{encryptedPassword},now(),now())
   </insert>
 </mapper>
 
