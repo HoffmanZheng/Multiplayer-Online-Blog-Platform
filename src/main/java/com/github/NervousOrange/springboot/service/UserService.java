@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,11 +25,13 @@ public class UserService implements UserDetailsService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User insertNewUser(String username, String password) {
+    public String insertNewUser(String username, String password) {
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
-        User user = new User(username, encryptedPassword);
-        this.mysqlDao.insertNewUser(user);
-        return user;
+        Map<String, String> param = new HashMap<>();
+        param.put("username", username);
+        param.put("encryptedPassword", encryptedPassword);
+        this.mysqlDao.insertNewUser(param);
+        return username;
     }
 
     public User getUserByUsername(String username) {
