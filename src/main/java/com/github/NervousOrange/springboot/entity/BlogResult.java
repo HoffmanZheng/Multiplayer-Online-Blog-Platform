@@ -10,6 +10,9 @@ public class BlogResult {
     private Integer totalPage;
     private List<Blog> data;
 
+    public BlogResult() {
+    }
+
     private BlogResult(String status, String msg, Integer total, Integer page, Integer totalPage, List<Blog> data) {
         this.status = status;
         this.msg = msg;

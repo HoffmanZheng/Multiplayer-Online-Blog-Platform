@@ -4,18 +4,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="blogMapper">
     <select id="getBlogList" parameterType="Map" resultMap="Blog">
-        select blog.id as blog_id, blog.title, blog.description, blog.content,
-               user.id as user_id, user.username as user_username, user.avatar as user_avatar, blog.created_at, blog.updated_at from
-        (select * from blog) blog inner join user on blog.user_id = user.id
-         limit 1, 1
+        select blog.id as blog_id,
+               blog.title as blog_title,
+               blog.description as blog_description,
+               blog.content as blog_content,
+               user.id as user_id,
+               user.username as user_username,
+               user.avatar as user_avatar,
+               blog.created_at as blog_created_at,
+               blog.updated_at as blog_updated_at
+        from (select * from blog) blog inner join user on blog.user_id = user.id
+        <if test="userId != null">
+            where user_id = #{userId}
+        </if>  limit #{offset}, #{limit}
     </select>
     <select id="getTotalBlogNum" resultType="Integer">
         select count(*) from blog
     </select>
     <select id="getBlogById" parameterType="int" resultMap="Blog">
-        select blog.id as blog_id, blog.title, blog.description, blog.content,
-        user.id as user_id, user.username, user.avatar , blog.created_at, blog.updated_at from
-         (select * from blog where id =1) blog inner join user on blog.user_id = user.id
+        select blog.id as blog_id,
+               blog.title as blog_title,
+               blog.description as blog_description,
+               blog.content as blog_content,
+               user.id as user_id,
+               user.username as user_username,
+               user.avatar as user_avatar,
+               blog.created_at as blog_created_at,
+               blog.updated_at as blog_updated_at
+        from (select * from blog where id = #{blogId}) blog inner join user on blog.user_id = user.id
     </select>
     <insert id="insertNewBlog" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
         insert into blog (title, description, content, user_id, created_at, updated_at)
@@ -32,14 +48,14 @@
         delete from blog where id = #{blogId}
     </delete>
     <resultMap id="Blog" type="com.github.NervousOrange.springboot.entity.Blog">
-        <result property="id" column="blog_id"/>
-        <result property="title" column="title"/>
-        <result property="description" column="description"/>
-        <result property="content" column="content"/>
-        <result property="createdAt" column="created_at"/>
-        <result property="updatedAt" column="updated_at"/>
+        <id property="id" column="blog_id"/>
+        <result property="title" column="blog_title"/>
+        <result property="description" column="blog_description"/>
+        <result property="content" column="blog_content"/>
+        <result property="createdAt" column="blog_created_at"/>
+        <result property="updatedAt" column="blog_updated_at"/>
         <association property="user" javaType="com.github.NervousOrange.springboot.entity.User">
-            <result property="id" column="user_id"/>
+            <id property="id" column="user_id"/>
             <result property="username" column="user_username"/>
             <result property="avatar" column="user_avatar"/>
         </association>

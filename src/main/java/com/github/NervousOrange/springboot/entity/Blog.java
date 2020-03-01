@@ -11,6 +11,9 @@ public class Blog {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public Blog() {
+    }
+
     public Blog(int id, String title, String description, String content, User user, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;

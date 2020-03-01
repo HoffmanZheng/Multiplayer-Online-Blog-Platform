@@ -1,4 +1,3 @@
-/*
 package com.github.NervousOrange.springboot.service;
 
 import com.github.NervousOrange.springboot.dao.BlogDao;
@@ -28,7 +27,7 @@ class BlogServiceTest {
 
     @Test
     void testFailedGetBlogList() {
-        Mockito.when(blogDao.getBlogList(1, 10 ,null)).thenThrow(new RuntimeException("System Error!"));
+        Mockito.when(blogDao.getBlogList(1, 10, null)).thenThrow(new RuntimeException("System Error!"));
         BlogResult blogResult = blogService.getBlogList(1, 10, null, true);
         Assertions.assertTrue(blogResult.getMsg().contains("系统异常"));
     }
@@ -53,4 +52,3 @@ class BlogServiceTest {
 
     }
 }
-*/

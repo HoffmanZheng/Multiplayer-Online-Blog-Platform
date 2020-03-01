@@ -22,8 +22,8 @@ public class BlogController {
     @GetMapping("/blog")
     @ResponseBody
     public Object getBlog(@RequestParam(value = "page") Integer page,
-              @RequestParam(value="userId",required = false) Integer userId,
-              @RequestParam(value = "atIndex",required = false) Boolean atIndex) {
+              @RequestParam(value = "userId", required = false) Integer userId,
+              @RequestParam(value = "atIndex", required = false) Boolean atIndex) {
         return blogService.getBlogList(page, 10, userId, atIndex);
     }
 
@@ -43,7 +43,7 @@ public class BlogController {
         }
         int userId = user.getId();
         String title = blogContent.get("title");
-        String content = blogContent.get("title");
+        String content = blogContent.get("content");
         String description = blogContent.get("description");
         return blogService.createBlog(title, content, description, userId);
     }
@@ -58,7 +58,7 @@ public class BlogController {
         int userId = user.getId();
         int intBlogId = Integer.parseInt(blogId);
         String title = blogContent.get("title");
-        String content = blogContent.get("title");
+        String content = blogContent.get("content");
         String description = blogContent.get("description");
         return blogService.patchBlogId(title, content, description, intBlogId, userId);
     }
