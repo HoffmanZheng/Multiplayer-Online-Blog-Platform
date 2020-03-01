@@ -18,7 +18,7 @@ public class AuthResult {
     }
 
     public static AuthResult successfulResult(String message, User user) {
-        return new AuthResult("ok", message, user, false);
+        return new AuthResult("ok", message, user, true);
     }
 
     public static AuthResult loggedAuthResult(User user) {
