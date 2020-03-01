@@ -1,6 +1,7 @@
 package com.github.NervousOrange.springboot.service;
 
 import com.github.NervousOrange.springboot.dao.BlogDao;
+import com.github.NervousOrange.springboot.entity.BlogListResult;
 import com.github.NervousOrange.springboot.entity.BlogResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,8 @@ class BlogServiceTest {
     @Test
     void testFailedGetBlogList() {
         Mockito.when(blogDao.getBlogList(1, 10, null)).thenThrow(new RuntimeException("System Error!"));
-        BlogResult blogResult = blogService.getBlogList(1, 10, null, true);
-        Assertions.assertTrue(blogResult.getMsg().contains("系统异常"));
+        BlogListResult blogListResult = blogService.getBlogList(1, 10, null, true);
+        Assertions.assertTrue(blogListResult.getMsg().contains("系统异常"));
     }
 
     @Test

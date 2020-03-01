@@ -2,18 +2,18 @@ package com.github.NervousOrange.springboot.entity;
 
 import java.util.List;
 
-public class BlogResult {
+public class BlogListResult {
     private String status;
     private String msg;
     private Integer total;
     private Integer page;
     private Integer totalPage;
-    private Blog data;
+    private List<Blog> data;
 
-    public BlogResult() {
+    public BlogListResult() {
     }
 
-    private BlogResult(String status, String msg, Integer total, Integer page, Integer totalPage, Blog data) {
+    private BlogListResult(String status, String msg, Integer total, Integer page, Integer totalPage, List<Blog> data) {
         this.status = status;
         this.msg = msg;
         this.total = total;
@@ -22,16 +22,12 @@ public class BlogResult {
         this.data = data;
     }
 
-    public static BlogResult successfulBlogIdResult(String msg, Blog data) {
-        return new BlogResult("ok", msg, null, null, null, data);
+    public static BlogListResult successfulBlogListResult(String msg, Integer total, Integer page, Integer totalPage, List<Blog> data) {
+        return new BlogListResult("ok", msg, total, page, totalPage, data);
     }
 
-    public static BlogResult failBlogResult(String msg) {
-        return new BlogResult("fail", msg, null, null, null, null);
-    }
-
-    public static BlogResult successfulDeleteBlogResult() {
-        return new BlogResult("ok", "删除成功", null, null, null, null);
+    public static BlogListResult failBlogResult(String msg) {
+        return new BlogListResult("fail", msg, null, null, null, null);
     }
 
     public String getStatus() {
@@ -54,7 +50,7 @@ public class BlogResult {
         return totalPage;
     }
 
-    public Blog getData() {
+    public List<Blog> getData() {
         return data;
     }
 }

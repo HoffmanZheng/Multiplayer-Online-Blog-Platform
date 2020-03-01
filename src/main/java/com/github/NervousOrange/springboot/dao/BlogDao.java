@@ -31,8 +31,8 @@ public class BlogDao {
         return sqlSession.selectOne("blogMapper.getTotalBlogNum");
     }
 
-    public List<Blog> getBlogById(Integer blogId) {
-        return sqlSession.selectList("blogMapper.getBlogById", blogId);
+    public Blog getBlogById(Integer blogId) {
+        return sqlSession.selectOne("blogMapper.getBlogById", blogId);
     }
 
     public int insertNewBlog(String title, String content, String description, Integer userId) {
@@ -54,6 +54,6 @@ public class BlogDao {
     }
 
     public void deleteBlogById(Integer blogId) {
-        sqlSession.delete("blogMapper.deleteBlogById");
+        sqlSession.delete("blogMapper.deleteBlogById", blogId);
     }
 }
