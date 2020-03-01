@@ -22,8 +22,8 @@ public class BlogController {
     @GetMapping("/blog")
     @ResponseBody
     public Object getBlog(@RequestParam(value = "page") Integer page,
-              @RequestParam(value="userId",required = false) Integer userId,
-              @RequestParam(value = "atIndex",required = false) Boolean atIndex) {
+              @RequestParam(value="userId", required = false) Integer userId,
+              @RequestParam(value = "atIndex", required = false) Boolean atIndex) {
         return blogService.getBlogList(page, 10, userId, atIndex);
     }
 

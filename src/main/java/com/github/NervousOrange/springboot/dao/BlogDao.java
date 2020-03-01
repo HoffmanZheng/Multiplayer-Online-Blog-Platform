@@ -19,12 +19,12 @@ public class BlogDao {
     }
 
     public List<Blog> getBlogList(Integer page, Integer pageSize, Integer userId) {
-       /* int offset = (page - 1) * pageSize;
+        int offset = (page - 1) * pageSize;
         Map<String, Object> param = new HashMap<>();
         param.put("offset", offset);
         param.put("limit", pageSize);
-        param.put("userId", userId);*/
-        return sqlSession.selectOne("blogMapper.getBlogList");
+        param.put("userId", userId);
+        return sqlSession.selectList("blogMapper.getBlogList", param);
     }
 
     public int getToTalBlogNum() {

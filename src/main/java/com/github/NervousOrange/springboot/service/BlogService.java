@@ -26,8 +26,8 @@ public class BlogService {
             List<Blog> blogList = blogDao.getBlogList(page, pageSize, userId);
             return BlogResult.successfulBlogResult("获取成功", totalBlogNum, page, totalPage, blogList);
         } catch (Exception e) {
-            throw new RuntimeException(e);
-            // return BlogResult.failBlogResult("系统异常");
+            // throw new RuntimeException(e);
+            return BlogResult.failBlogResult("系统异常");
         }
     }
 
