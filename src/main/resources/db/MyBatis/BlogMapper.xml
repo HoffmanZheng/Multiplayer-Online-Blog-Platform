@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blogMapper">
+    <select id="getBlogList" parameterType="Map" resultMap="Blog">
+        select blog.id as blog_id, blog.title, blog.description, blog.content,
+               user.id as user_id, user.username as user_username, user.avatar as user_avatar, blog.created_at, blog.updated_at from
+        (select * from blog) blog inner join user on blog.user_id = user.id
+         limit 1, 1
+    </select>
+    <select id="getTotalBlogNum" resultType="Integer">
+        select count(*) from blog
+    </select>
+    <select id="getBlogById" parameterType="int" resultMap="Blog">
+        select blog.id as blog_id, blog.title, blog.description, blog.content,
+        user.id as user_id, user.username, user.avatar , blog.created_at, blog.updated_at from
+         (select * from blog where id =1) blog inner join user on blog.user_id = user.id
+    </select>
+    <insert id="insertNewBlog" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        insert into blog (title, description, content, user_id, created_at, updated_at)
+        values (#{title}, #{description}, #{content}, #{userId}, now(), now())
+    </insert>
+    <update id="updateBlogById" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+        update blog set
+            title = #{title},
+            content = #{content},
+            description = #{description}
+        where id = #{blogId}
+    </update>
+    <delete id="deleteBlogById" parameterType="int">
+        delete from blog where id = #{blogId}
+    </delete>
+    <resultMap id="Blog" type="com.github.NervousOrange.springboot.entity.Blog">
+        <result property="id" column="blog_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <association property="user" javaType="com.github.NervousOrange.springboot.entity.User">
+            <result property="id" column="user_id"/>
+            <result property="username" column="user_username"/>
+            <result property="avatar" column="user_avatar"/>
+        </association>
+    </resultMap>
+</mapper>

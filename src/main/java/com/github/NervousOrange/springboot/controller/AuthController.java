@@ -29,7 +29,7 @@ public class AuthController {
 
     @GetMapping("/auth")
     @ResponseBody
-    public Object auth() {
+    public AuthResult auth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user =  userService.getUserByUsername(authentication == null ? null : authentication.getName());
         if (user == null) {

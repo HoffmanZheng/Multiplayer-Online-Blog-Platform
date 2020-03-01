@@ -1,6 +1,6 @@
 package com.github.NervousOrange.springboot.service;
 
-import com.github.NervousOrange.springboot.dao.MysqlDao;
+import com.github.NervousOrange.springboot.dao.UserDao;
 import com.github.NervousOrange.springboot.entity.User;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +15,13 @@ import java.util.Map;
 
 @Service
 public class UserService implements UserDetailsService {
-    private MysqlDao mysqlDao;
+    private UserDao userDao;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Inject
     @SuppressFBWarnings("URF_UNREAD_FIELD")
-    public UserService(MysqlDao mysqlDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.mysqlDao = mysqlDao;
+    public UserService(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDao = userDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -30,12 +30,12 @@ public class UserService implements UserDetailsService {
         Map<String, String> param = new HashMap<>();
         param.put("username", username);
         param.put("encryptedPassword", encryptedPassword);
-        this.mysqlDao.insertNewUser(param);
+        this.userDao.insertNewUser(param);
         return username;
     }
 
     public User getUserByUsername(String username) {
-        return this.mysqlDao.getUserByUsername(username);
+        return this.userDao.getUserByUsername(username);
     }
 
     @Override

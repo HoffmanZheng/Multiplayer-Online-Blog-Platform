@@ -14,6 +14,9 @@ public class User {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public User() {
+    }
+
     public User (String username, String encryptedPassword) {
         this.username = username;
         this.encryptedPassword = encryptedPassword;
@@ -44,5 +47,17 @@ public class User {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

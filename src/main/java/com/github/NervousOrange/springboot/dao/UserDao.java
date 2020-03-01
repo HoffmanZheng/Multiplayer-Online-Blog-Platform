@@ -8,11 +8,11 @@ import javax.inject.Inject;
 import java.util.Map;
 
 @Component
-public class MysqlDao {
+public class UserDao {
     private final SqlSession sqlSession;
 
     @Inject
-    public MysqlDao(SqlSession sqlSession) {
+    public UserDao(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
     }
 

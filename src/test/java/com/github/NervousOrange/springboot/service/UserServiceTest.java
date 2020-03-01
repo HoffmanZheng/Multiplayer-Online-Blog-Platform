@@ -1,6 +1,6 @@
 package com.github.NervousOrange.springboot.service;
 
-import com.github.NervousOrange.springboot.dao.MysqlDao;
+import com.github.NervousOrange.springboot.dao.UserDao;
 import com.github.NervousOrange.springboot.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import java.util.Map;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
     @Mock
-    private MysqlDao mockMysqlDao;
+    private UserDao mockUserDao;
     @Mock
     private BCryptPasswordEncoder mockBCryptPasswordEncoder;
     @InjectMocks
@@ -34,13 +34,13 @@ class UserServiceTest {
         Mockito.when(mockBCryptPasswordEncoder.encode("password"))
                 .thenReturn("myEncodedPassword");
         userService.insertNewUser("MyUser", "password");
-        Mockito.verify(mockMysqlDao).insertNewUser(param);
+        Mockito.verify(mockUserDao).insertNewUser(param);
     }
 
     @Test
     void testGetUserByUsername() {
         userService.getUserByUsername("MyUser");
-        Mockito.verify(mockMysqlDao).getUserByUsername("MyUser");
+        Mockito.verify(mockUserDao).getUserByUsername("MyUser");
     }
 
     @Test
@@ -53,7 +53,7 @@ class UserServiceTest {
 
     @Test
     public void testLoadUserByUsernameWhenUserExist() {
-        Mockito.when(mockMysqlDao.getUserByUsername("MyUser"))
+        Mockito.when(mockUserDao.getUserByUsername("MyUser"))
                 .thenReturn(new User("MyUser", "encodedPassword"));
         UserDetails userDetails = userService.loadUserByUsername("MyUser");
         Assertions.assertEquals("MyUser", userDetails.getUsername());
