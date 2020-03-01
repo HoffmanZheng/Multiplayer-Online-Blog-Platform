@@ -1,7 +1,5 @@
 package com.github.NervousOrange.springboot.entity;
 
-import java.util.List;
-
 public class BlogResult {
     private String status;
     private String msg;
