@@ -101,6 +101,11 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.11</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -164,16 +169,77 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
+				<version>3.0.0-M4</version>
 				<configuration>
-					<forkCount>3</forkCount>
-					<reuseForks>true</reuseForks>
-					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+					<excludes>
+						<exclude>**/*IntegrationTest</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.1</version>
+				<version>3.0.0-M4</version>
+				<configuration>
+					<includes>
+						<include>**/*IntegrationTest</include>
+					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>start-test-database</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>--name</argument>
+								<argument>test-mysql</argument>
+								<argument>-p</argument>
+								<argument>3307:3306</argument>
+								<argument>-e</argument>
+								<argument>MYSQL_ROOT_PASSWORD=123456</argument>
+								<argument>-d</argument>
+								<argument>mysql:8.0</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>wait-test-database</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>sleep</executable>
+							<arguments>
+								<argument>45</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>teardown-test-database</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<arguments>
+								<argument>rm</argument>
+								<argument>-f</argument>
+								<argument>test-mysql</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.flywaydb</groupId>
@@ -184,6 +250,20 @@
 					<user>root</user>
 					<password>123456</password>
 				</configuration>
+				<executions>
+					<execution>
+						<id>init-test-database</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:mysql://localhost:3307/blogtest?createDatabaseIfNotExist=true</url>
+							<user>root</user>
+							<password>123456</password>
+						</configuration>
+					</execution>
+				</executions>
 				<dependencies>
 					<dependency>
 						<groupId>mysql</groupId>
@@ -194,5 +274,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
