@@ -29,24 +29,4 @@ class BlogServiceTest {
         BlogListResult blogListResult = blogService.getBlogList(1, 10, null, true);
         Assertions.assertTrue(blogListResult.getMsg().contains("系统异常"));
     }
-
-    @Test
-    void testGetBlogById() {
-
-    }
-
-    @Test
-    void testPostBlog() {
-
-    }
-
-    @Test
-    void testPatchBlogById() {
-
-    }
-
-    @Test
-    void testDeleteBlogById() {
-
-    }
 }

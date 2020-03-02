@@ -1,6 +1,7 @@
 package com.github.NervousOrange.springboot.service;
 
 import com.github.NervousOrange.springboot.dao.UserDao;
+import com.github.NervousOrange.springboot.entity.AvatarGenerator;
 import com.github.NervousOrange.springboot.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,8 @@ class UserServiceTest {
     private UserDao mockUserDao;
     @Mock
     private BCryptPasswordEncoder mockBCryptPasswordEncoder;
+    @Mock
+    AvatarGenerator mockAvatarGenerator;
     @InjectMocks
     UserService userService;
 
@@ -30,7 +33,9 @@ class UserServiceTest {
         Map<String, String> param = new HashMap<>();
         param.put("username", "MyUser");
         param.put("encryptedPassword", "myEncodedPassword");
+        param.put("avatar", "https://s2.ax1x.com/2020/03/02/3f1FDe.jpg");
 
+        Mockito.when(mockAvatarGenerator.getRandomAvatar()).thenReturn("https://s2.ax1x.com/2020/03/02/3f1FDe.jpg");
         Mockito.when(mockBCryptPasswordEncoder.encode("password"))
                 .thenReturn("myEncodedPassword");
         userService.insertNewUser("MyUser", "password");
