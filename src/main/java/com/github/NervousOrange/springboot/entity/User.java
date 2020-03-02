@@ -2,6 +2,7 @@ package com.github.NervousOrange.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.time.Instant;
 
 @SuppressFBWarnings({"UWF_NULL_FIELD", "UWF_UNWRITTEN_FIELD"})
@@ -20,7 +21,15 @@ public class User {
     public User (String username, String encryptedPassword) {
         this.username = username;
         this.encryptedPassword = encryptedPassword;
-        this.avatar = null;
+        this.avatar = "";
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    public User (String username, String encryptedPassword, String avatar) {
+        this.username = username;
+        this.encryptedPassword = encryptedPassword;
+        this.avatar = avatar;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }

@@ -105,6 +105,4 @@ public class MyIntegrationTest {
         }
         return json;
     }
-
-
 }
