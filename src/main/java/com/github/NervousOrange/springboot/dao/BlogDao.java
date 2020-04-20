@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class BlogDao {
     @Inject
     public BlogDao(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
+
     }
 
     public List<Blog> getBlogList(Integer page, Integer pageSize, Integer userId) {
@@ -41,7 +43,9 @@ public class BlogDao {
         param.put("content", content);
         param.put("description", description);
         param.put("userId", userId);
-        return sqlSession.insert("blogMapper.insertNewBlog", param);
+        sqlSession.insert("blogMapper.insertNewBlog", param);
+        BigInteger id = (BigInteger) param.get("id");
+        return id.intValue();
     }
 
     public int updateBlogById(String title, String content, String description, Integer blogId) {

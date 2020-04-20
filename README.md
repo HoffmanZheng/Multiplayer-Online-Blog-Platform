@@ -33,7 +33,7 @@
 
   配置 TravisCI 对 Github 仓库进行管理，使每次 commit 都自动进行以上测试，保证项目可演进性。
 
-### How to build
+## How to build
 
 clone 项目至本地目录：
 

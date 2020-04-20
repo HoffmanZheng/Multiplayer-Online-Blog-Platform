@@ -1,6 +1,5 @@
 package com.github.NervousOrange.springboot.service;
 
-import com.github.NervousOrange.springboot.controller.AuthController;
 import com.github.NervousOrange.springboot.dao.BlogDao;
 import com.github.NervousOrange.springboot.entity.Blog;
 import com.github.NervousOrange.springboot.entity.BlogListResult;
@@ -16,7 +15,7 @@ public class BlogService {
     private BlogDao blogDao;
 
     @Inject
-    public BlogService(BlogDao blogDao, AuthController authController) {
+    public BlogService(BlogDao blogDao) {
         this.blogDao = blogDao;
     }
 

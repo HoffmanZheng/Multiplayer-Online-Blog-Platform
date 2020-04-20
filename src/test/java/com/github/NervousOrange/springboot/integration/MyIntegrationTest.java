@@ -39,12 +39,27 @@ public class MyIntegrationTest {
 
         JSONObject json = testRegister(hostPort, httpclient);
 
+        testSuccessfulAuth(hostPort, httpclient);
+
+        testLogout(hostPort, httpclient);
+
         testFailedAuth(hostPort, httpclient);
 
         testLogin(hostPort, httpclient, json);
 
         testSuccessfulAuth(hostPort, httpclient);
 
+    }
+
+    private void testLogout(String hostPort, CloseableHttpClient httpclient) throws IOException {
+        HttpGet httpGet = new HttpGet("http://localhost:" + hostPort + "/auth/logout");
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+            Assertions.assertTrue(response.getStatusLine().toString().contains("200"));
+            String entity = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            System.out.println(entity);
+            Assertions.assertTrue(entity.contains("\"status\":\"ok\""));
+            Assertions.assertTrue(entity.contains("注销成功"));
+        }
     }
 
     private void testSuccessfulAuth(String hostPort, CloseableHttpClient httpclient) throws IOException {
