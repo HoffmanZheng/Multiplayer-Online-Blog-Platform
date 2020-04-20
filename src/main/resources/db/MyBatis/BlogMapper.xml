@@ -33,7 +33,7 @@
                blog.updated_at as blog_updated_at
         from (select * from blog where id = #{blogId}) blog inner join user on blog.user_id = user.id
     </select>
-    <insert id="insertNewBlog" parameterType="Map" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertNewBlog" parameterType="Map" keyProperty="id" keyColumn="id">
         insert into blog (title, description, content, user_id, created_at, updated_at)
         values (#{title}, #{description}, #{content}, #{userId}, now(), now())
     </insert>

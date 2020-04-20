@@ -73,10 +73,11 @@ public class AuthController {
         }
         try {
             userService.insertNewUser(username, password);
-            return AuthResult.successfulResult("注册成功", userService.getUserByUsername(username));
         } catch (DuplicateKeyException e) {
             return AuthResult.failedResult("username already exist");
         }
+        login(usernameAndPassword);
+        return AuthResult.successfulResult("注册成功", userService.getUserByUsername(username));
     }
 
     @GetMapping("/auth/logout")
@@ -88,7 +89,7 @@ public class AuthController {
             return AuthResult.failedResult("用户尚未登录");
         } else {
             SecurityContextHolder.clearContext();
-            return AuthResult.failedResult("注销成功");
+            return AuthResult.logoutResult("注销成功");
         }
     }
 }

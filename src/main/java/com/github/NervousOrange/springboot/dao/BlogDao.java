@@ -2,6 +2,7 @@ package com.github.NervousOrange.springboot.dao;
 
 import com.github.NervousOrange.springboot.entity.Blog;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -12,10 +13,12 @@ import java.util.Map;
 @Component
 public class BlogDao {
     private final SqlSession sqlSession;
+    SqlSessionFactoryBuilder sqlSessionFactoryBuilder;
 
     @Inject
     public BlogDao(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
+
     }
 
     public List<Blog> getBlogList(Integer page, Integer pageSize, Integer userId) {
@@ -42,6 +45,9 @@ public class BlogDao {
         param.put("description", description);
         param.put("userId", userId);
         return sqlSession.insert("blogMapper.insertNewBlog", param);
+        /*sqlSession.commit();
+        int id = (int) param.get("id");
+        return id;*/
     }
 
     public int updateBlogById(String title, String content, String description, Integer blogId) {

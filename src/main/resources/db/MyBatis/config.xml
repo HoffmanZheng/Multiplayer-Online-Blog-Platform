@@ -5,6 +5,7 @@
 <configuration>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="useGeneratedKeys" value="true"/>
     </settings>
     <mappers>
         <mapper resource="db/MyBatis/MyMapper.xml"/>

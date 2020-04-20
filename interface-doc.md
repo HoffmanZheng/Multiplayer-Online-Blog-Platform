@@ -14,9 +14,9 @@
 5. 返回成功的数据格式
 6. 返回失败的数据格式
 
-后端接口线上地址根路径： [http://](http:///)
+后端接口线上地址根路径： [http://blog-server.hunger-valley.com](http://blog-server.hunger-valley.com/)
 
-下面我们和后端做以下接口约定，开发阶段可以用 postman 或者 [curl 命令](https://gist.github.com/subfuzion/08c5d85437d5d4f00e58) 测试接口
+下面我们和后端做以下接口约定，开发阶段可以用 postman 或者 [curl 命令](https://gist.github.com/subfuzion/08c5d85437d5d4f00e58)测试接口
 
 ## 认证相关
 
@@ -94,7 +94,7 @@ curl -d "username=hunger1&password=123456" -X POST "http://localhost:3000/auth/r
 
 测试命令
 
-```shell
+```
 # -i 可以展示响应头
 # 会发现响应头里有 setCookie 信息，得到 cookie
 
@@ -136,7 +136,7 @@ curl -d "username=hunger1&password=123456" "http://localhost:3000/auth/login" -i
 
 测试命令
 
-```shell
+```
 #先通过登录接口获取 cookie，带上 cookie 就能测试登录
 
 curl "http://localhost:3000/auth" -b "connect.sid=s%3AmeDbrn03UtTM8fqChaPQ20wmWlnKeHiu.e3uMtu7j1zQ1iNeaajCmxkYYGQ%2FyHV1ZsozMvZYWC6s"
@@ -153,11 +153,11 @@ curl "http://localhost:3000/auth" -b "connect.sid=s%3AmeDbrn03UtTM8fqChaPQ20wmWl
 - 失败
   - 返回格式 `{"status": "fail", "msg": "用户尚未登录"}`
 - 成功
-  - 返回格式 `{"status": "fail", "msg": "注销成功"}`
+  - 返回格式 `{"status": "ok", "msg": "注销成功"}`
 
 测试命令
 
-```shell
+```
 curl "http://localhost:3000/auth/logout" -b "connect.sid=s%3AmeDbrn03UtTM8fqChaPQ20wmWlnKeHiu.e3uMtu7j1zQ1iNeaajCmxkYYGQ%2FyHV1ZsozMvZYWC6s"
 ```
 
@@ -291,7 +291,7 @@ curl "http://localhost:3000/blog"
 
 测试命令
 
-```shell
+```
 curl -d "title=hello&content=world&description=jirengu" -X POST "http://localhost:3000/blog" -b "connect.sid=s%3AdyZh-z5fqPU_ThG9Qn8nGD6euI0UI75e.8uso0k4P6WzqWv02iQCUwxbUML2RdlOCnpKp7RSJpj0"
 ```
 
@@ -320,7 +320,7 @@ curl -d "title=hello&content=world&description=jirengu" -X POST "http://localhos
 - 成功
   - 返回格式
 
-```javascript
+```
 {
   "status": "ok",
   "msg": "修改成功",
@@ -365,7 +365,7 @@ curl -d "title=hello100&content=world1&description=jirengu2234444444&atIndex=tru
 
   - 返回格式
 
-    ```javascript
+    ```
     {
     "status": "ok",
     "msg": "删除成功"

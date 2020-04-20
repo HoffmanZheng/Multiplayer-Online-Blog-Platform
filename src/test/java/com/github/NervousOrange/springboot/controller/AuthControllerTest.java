@@ -172,6 +172,8 @@ class AuthControllerTest {
     void testSuccessfulRegister() throws Exception {
         Mockito.when(mockUserService.insertNewUser("MyUser", "encodedPassword"))
                 .thenReturn("MyUser");
+        Mockito.when(mockUserService.loadUserByUsername("MyUser"))
+                .thenReturn(new User("MyUser", "encodedPassword", Collections.emptyList()));
 
         postVisitWithUsernamePasswordPathAndExpectedResult("MyUser", "encodedPassword", "register", "注册成功");
     }
