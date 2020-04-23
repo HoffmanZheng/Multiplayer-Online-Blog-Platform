@@ -3,14 +3,16 @@ package com.github.NervousOrange.springboot.service;
 import com.github.NervousOrange.springboot.dao.UserDao;
 import com.github.NervousOrange.springboot.entity.AvatarGenerator;
 import com.github.NervousOrange.springboot.entity.User;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -19,10 +21,17 @@ public class UserService implements UserDetailsService {
     private AvatarGenerator avatarGenerator;
 
     @Inject
-    @SuppressFBWarnings("URF_UNREAD_FIELD")
-    public UserService(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, AvatarGenerator avatarGenerator) {
-        this.userDao = userDao;
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Inject
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Inject
+    public void setAvatarGenerator(AvatarGenerator avatarGenerator) {
         this.avatarGenerator = avatarGenerator;
     }
 
